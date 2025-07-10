@@ -1,2 +1,6 @@
 requests == 2.32.4
 python-dotenv == 1.1.1
+zipfile == 3.13.5
+gzip == 
+shutil == 
+tempfile == 
