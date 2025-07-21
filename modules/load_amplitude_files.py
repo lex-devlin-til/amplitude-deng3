@@ -18,6 +18,7 @@ s3_client = boto3.client(
     aws_secret_access_key = aws_secret_key
 )
 
+# List everything in S3 bucket/folder
 aws_folder_files = []
 response = s3_client.list_objects_v2(
     Bucket=bucket,
@@ -27,25 +28,27 @@ for obj in response.get('Contents', []):
 print(aws_folder_files)
 
 # Set file start and end points
-# data_folder = "data"
+data_folder = "data"
 # aws_file_destination = "python-import/test_file.json"
 
 # Loop through filenames in data folder
-# datafiles = os.listdir(data_folder)
-# upload_count = 0
-# error_count = 0
-# for filename in datafiles:
-#     if filename[-5:] == '.json':
-#         local_file_location = data_folder + '/' + filename
-#         aws_file_destination = 'python-import' + '/' + filename
-#         try:
-#             s3_client.upload_file(local_file_location, bucket, aws_file_destination)
-#             upload_count += 1
-#         except:
-#             print(f'File {filename} not uploaded')
-# print(f'{upload_count} json files uploaded to S3.')
-# if error_count > 0:
-#     print(f'{error_count} json files failed to upload.')
+datafiles = os.listdir(data_folder)
+upload_count = 0
+error_count = 0
+for filename in datafiles:
+    if filename[-5:] == '.json':
+        local_file_location = data_folder + '/' + filename
+        aws_file_destination = 'python-import' + '/' + filename
+
+        # Upload files to S3 bucket, count number of uploads
+        try:
+            s3_client.upload_file(local_file_location, bucket, aws_file_destination)
+            upload_count += 1
+        except:
+            print(f'File {filename} not uploaded')
+print(f'{upload_count} json files uploaded to S3.')
+if error_count > 0:
+    print(f'{error_count} json files failed to upload.')
 
 # Upload file to s3 bucket
 
