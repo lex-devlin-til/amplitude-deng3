@@ -36,21 +36,22 @@ def list_s3_files(aws_access_key, aws_secret_key, bucket, bucket_folder):
 s3_folder_files = list_s3_files(aws_access_key, aws_secret_key, bucket, bucket_folder)
 
 # Max hour function for getting the greatest hour currently in the data
-def s3_max_hour(s3_folder_files):
+def get_max_hour(filenames):
 
 # Grab datetime portion of filename, take the max
-    datetime_list = []
-    for filename in s3_folder_files:
+    files_with_timestamps = []
+    for filename in filenames:
 
         # If it's json, split it. Date = stuff after _, before #. The 'parts' business is what works, doing it all in one line doesn't work.
         if filename[-5:] == '.json':
             parts = filename.split('_', 1)
             filedate = parts[1].split('#')[0] if len(parts) > 1 else ""
             parsed_date = datetime.datetime.strptime(filedate, "%Y-%m-%d_%H")
-            datetime_list.append(parsed_date)
+            files_with_timestamps.append(parsed_date)
 
-    # Get the max!
-    max_date = max(datetime_list)
+    # Returns a list of tuples, each containing a filename and its parsed date
+    # Max can be taken from this later.
+    max_date = max(files_with_timestamps)
     return max_date
 
 # for testing

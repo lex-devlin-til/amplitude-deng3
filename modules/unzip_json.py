@@ -50,3 +50,6 @@ def unzip_json(zip_name='data.zip', data_dir='data'):
                 json_count += 1
     
     print(f'{json_count} jsons unzipped from {zip_name}. Find them in {data_dir} folder.')
+
+    # Delete the data.zip now that it's been unzipped
+    os.remove(data_dir + '/data.zip')
