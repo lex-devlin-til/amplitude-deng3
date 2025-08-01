@@ -18,7 +18,7 @@ load_dotenv()
 prev_day = datetime.now() - timedelta(days=1)
 starttime = prev_day.strftime('%Y%m%dT00')
 endtime = datetime.now().strftime('%Y%m%dT23')
-starttime = '20250705T00'
+starttime = '20250705T00'  
 endtime = '20250710T23'
 
 api_key = os.getenv("AMP_API_KEY")
